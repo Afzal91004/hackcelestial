@@ -11,15 +11,16 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
-        message: "User already exist with this email",
+        message: "User already exists with this email",
         success: false,
       });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
 
+    const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({
       fullname,
       email,
@@ -33,9 +34,14 @@ export const register = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
+
 export const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
@@ -45,6 +51,7 @@ export const login = async (req, res) => {
         success: false,
       });
     }
+
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
@@ -52,25 +59,25 @@ export const login = async (req, res) => {
         success: false,
       });
     }
-    const isPasswrodMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswrodMatch) {
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
       return res.status(400).json({
         message: "Incorrect email or password.",
         success: false,
       });
     }
-    // check role is correct or not
-    if ((role = !user.role)) {
+
+    // check if the role matches
+    if (role !== user.role) {
       return res.status(400).json({
-        message: "Account dosen't exist with current role.",
+        message: "Account doesn't exist with current role.",
         success: false,
       });
     }
 
-    const tokenData = {
-      userId: user._id,
-    };
-    const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
+    const tokenData = { userId: user._id };
+    const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
 
@@ -86,57 +93,67 @@ export const login = async (req, res) => {
     return res
       .status(200)
       .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000,
-        httpsOnly: true,
+        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+        httpOnly: true,
         sameSite: "strict",
       })
       .json({
-        message: `Welcome back ${user.fullname},
-            user,
-            success:true`,
+        message: `Welcome back, ${user.fullname}`,
+        user,
+        success: true,
       });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
+
 export const logout = async (req, res) => {
   try {
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      return: "Logged out successfully.",
+      message: "Logged out successfully.",
       success: true,
     });
-  } catch {
-    console.log(error);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
+
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file = req.file;
+    const file = req.file; // Assuming file comes in the request for profile picture or resume
 
-    // cloudinary ayga idhr
     let skillsArray;
-    if(skills) {
-        skillsArray = skills.split(",");
+    if (skills) {
+      skillsArray = skills.split(",");
     }
-    const userId = req.id;
+
+    const userId = req.id; // Assuming req.id contains the authenticated user's id
     let user = await User.findById(userId);
 
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         message: "User not found.",
         success: false,
       });
     }
-    // Updating data
-    if(fullname) user.fullname = fullname
-    if(email) user.email = email
-    if(phoneNumber) user.phoneNumber = phoneNumber
-    if(bio) user.profile.bio = bio
-    if(skills) user.profile.skills = skillsArray
 
-    // resume comes later here
+    // Updating fields if they exist
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skillsArray;
 
+    // Save updated user
     await user.save();
 
     user = {
@@ -149,11 +166,15 @@ export const updateProfile = async (req, res) => {
     };
 
     return res.status(200).json({
-        message:"Profile updated successfully.",
-        user,
-        success:true
-    })
+      message: "Profile updated successfully.",
+      user,
+      success: true,
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
