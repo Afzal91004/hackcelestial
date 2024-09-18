@@ -13,6 +13,10 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applicants from "./components/admin/Applicants";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import Resumate from "./resumate/Resumate";
+import Dashboard from "./resumate/Dashboard";
+import SignInPage from "./resumate/authentication/sign-in";
+import ResApp from "./resumate/ResApp";
 
 const appRouter = createBrowserRouter([
   {
@@ -91,6 +95,26 @@ const appRouter = createBrowserRouter([
         <Applicants />
       </ProtectedRoute>
     ),
+  },
+
+  // resumate
+  {
+    element: <ResApp />,
+    children: [
+      {
+        path: "/resumate",
+        element: <Resumate />,
+      },
+      {
+        path: "/resumate/dashboard",
+        element: <Dashboard />,
+      },
+    ],
+  },
+
+  {
+    path: "/resumate/authentication/sign-in",
+    element: <SignInPage />,
   },
 ]);
 
