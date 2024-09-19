@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <div className="bg-white px-24">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
-        {location.pathname === "/resumate" || "/resume/dashboard" ? (
+        {location.pathname === ("/resumate" || "/resume/dashboard") ? (
           <>
             {/* <div className="flex justify-between  items-center"> */}
             <div>
