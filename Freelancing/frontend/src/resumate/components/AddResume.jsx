@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PlusSquare } from "lucide-react";
+import { Loader2, PlusSquare } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,26 +11,50 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { v4 as uuidv4 } from "uuid";
-import GlobalApi from "service/GlobalApi";
+import GlobalApi from "../../../service/GlobalApi";
 import { useUser } from "@clerk/nextjs";
 
 function AddResume() {
   const [openDialog, setOpenDialog] = useState(false);
   const [resumeTitle, setResumeTitle] = useState("");
-  const {user}= useUser()
+  const { user } = useUser();
+  const [loading, setLoading] = useState(false);
 
   const onCreate = async () => {
-    const uuid = uuidv4();
-    const data = {
-      data: {
-        title: resumeTitle,
-        resumeId: uuid,
-        userEmail:user?primaryEmailAddress?.emailAddress,
-        userName:user?.fullName
-      },
-    };
-    GlobalApi.CreateNewResume();
+    try {
+      setLoading(true);
+      const uuid = uuidv4();
+      const data = {
+        data: {
+          title: resumeTitle,
+          resumeId: uuid,
+          userEmail: user?.primaryEmailAddress?.emailAddress,
+          userName: user?.fullName,
+        },
+      };
+
+      // Make sure to pass the data as an argument
+      const response = await GlobalApi.CreateNewResume(data);
+      console.log("Resume created successfully:", response.data);
+      setLoading(false);
+      setOpenDialog(false); // Close the dialog on success
+    } catch (error) {
+      if (error.response) {
+        setLoading(false);
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error creating resume:", error.response.data);
+        console.error("Status code:", error.response.status);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error creating resume:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error creating resume:", error.message);
+      }
+    }
   };
+
   return (
     <div>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -54,8 +78,11 @@ function AddResume() {
               <Button variant="ghost" onClick={() => setOpenDialog(false)}>
                 Cancel
               </Button>
-              <Button disabled={!resumeTitle} onClick={() => onCreate()}>
-                Add
+              <Button
+                disabled={!resumeTitle || loading}
+                onClick={() => onCreate()}
+              >
+                {loading ? <Loader2 className="animate-spin" /> : "Create"}
               </Button>
             </div>
           </DialogHeader>

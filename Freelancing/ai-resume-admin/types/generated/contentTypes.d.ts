@@ -499,7 +499,7 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   attributes: {
     title: Schema.Attribute.String;
     blocks: Schema.Attribute.DynamicZone<
-      ['shared.quote', 'shared.rich-text', 'shared.slider']
+      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
     >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -644,15 +644,14 @@ export interface ApiUserResumeUserResume extends Struct.CollectionTypeSchema {
   info: {
     singularName: 'user-resume';
     pluralName: 'user-resumes';
-    displayName: 'UserResume';
-    description: '';
+    displayName: 'User Resume';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Title: Schema.Attribute.String & Schema.Attribute.Required;
-    resumeid: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    resumeId: Schema.Attribute.String;
     userEmail: Schema.Attribute.Email;
     userName: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;

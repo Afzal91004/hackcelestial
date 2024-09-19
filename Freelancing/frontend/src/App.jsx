@@ -17,6 +17,7 @@ import Resumate from "./resumate/Resumate";
 import Dashboard from "./resumate/Dashboard";
 import SignInPage from "./resumate/authentication/sign-in";
 import ResApp from "./resumate/ResApp";
+import EditResume from "./resumate/resume/[resumeId]/edit";
 
 const appRouter = createBrowserRouter([
   {
@@ -108,6 +109,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/resumate/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/resumate/dashboard/resume/:resumeId/edit",
+        element: <EditResume />,
       },
     ],
   },

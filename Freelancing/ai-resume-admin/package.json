@@ -1,5 +1,5 @@
 {
-  "name": "resumate-admin",
+  "name": "ai-resume-admin",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -15,7 +15,6 @@
     "@strapi/plugin-cloud": "5.0.0",
     "@strapi/plugin-users-permissions": "5.0.0",
     "@strapi/strapi": "5.0.0",
-    "better-sqlite3": "^11.3.0",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.27",
     "pg": "8.8.0",
@@ -24,11 +23,12 @@
     "react-router-dom": "^6.0.0",
     "styled-components": "^6.0.0"
   },
+  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "8a3507c1-4414-4588-93c3-fcf4ee23583c"
+    "uuid": "c419e5cb-4a8a-426d-a535-454e355eca45"
   }
 }

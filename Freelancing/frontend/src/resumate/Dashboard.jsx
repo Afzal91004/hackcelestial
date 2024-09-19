@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AddResume from "./components/AddResume";
+import { UserButton, useUser } from "@clerk/nextjs";
+import GlobalApi from "../../service/GlobalApi";
 
 function Dashboard() {
+  const { user } = useUser();
+  const [resumeList, setResumeList] = useState();
+  useEffect(() => {
+    user && GetResumesList();
+  }, [user]);
+  // used to get users resume
+  const GetResumesList = () => {
+    GlobalApi.GetUserResumes(user?.primaryEmailAddress?.emailAddress).then(
+      (response) => {
+        console.log(response.data);
+        setResumeList(response.data);
+      }
+    );
+  };
   return (
     <div className="p-10 md:px-20 lg:px-32">
       <h2 className="font-bold text-3xl">My Resume</h2>
@@ -9,6 +25,7 @@ function Dashboard() {
       <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         <AddResume />
       </div>
+      <UserButton />
     </div>
   );
 }
