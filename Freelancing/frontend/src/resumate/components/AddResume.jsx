@@ -13,12 +13,14 @@ import { Input } from "@/components/ui/input";
 import { v4 as uuidv4 } from "uuid";
 import GlobalApi from "../../../service/GlobalApi";
 import { useUser } from "@clerk/nextjs";
+import { useNavigate } from "react-router-dom";
 
 function AddResume() {
   const [openDialog, setOpenDialog] = useState(false);
   const [resumeTitle, setResumeTitle] = useState("");
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigate();
 
   const onCreate = async () => {
     try {
@@ -35,9 +37,15 @@ function AddResume() {
 
       // Make sure to pass the data as an argument
       const response = await GlobalApi.CreateNewResume(data);
-      console.log("Resume created successfully:", response.data);
+      console.log(
+        "Resume created successfully:",
+        response.data.data.documentId
+      );
       setLoading(false);
       setOpenDialog(false); // Close the dialog on success
+      navigation(
+        "/resumate/Dashboard/resume/" + response.data.data.documentId + "/edit"
+      );
     } catch (error) {
       if (error.response) {
         setLoading(false);
