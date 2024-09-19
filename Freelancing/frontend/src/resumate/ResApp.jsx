@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
+import Navbar from "@/components/ui/shared/Navbar";
 
 export default function ResApp() {
   const { isLoaded, isSignedIn } = useUser();
@@ -14,5 +15,10 @@ export default function ResApp() {
     return <div>Loading...</div>;
   }
 
-  return <Outlet />; // Render child routes
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  ); // Render child routes
 }

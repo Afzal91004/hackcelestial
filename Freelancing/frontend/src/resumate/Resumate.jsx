@@ -5,12 +5,7 @@ import Navbar from "@/components/ui/shared/Navbar";
 function Resumate() {
   const { user } = useSelector((store) => store.auth);
 
-  return (
-    <div>
-      <Navbar />
-      Resumate Home page
-    </div>
-  );
+  return <div>Resumate Home page</div>;
 }
 
 export default Resumate;
