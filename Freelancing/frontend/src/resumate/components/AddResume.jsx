@@ -11,15 +11,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { v4 as uuidv4 } from "uuid";
+import GlobalApi from "service/GlobalApi";
+import { useUser } from "@clerk/nextjs";
 
 function AddResume() {
   const [openDialog, setOpenDialog] = useState(false);
   const [resumeTitle, setResumeTitle] = useState("");
+  const {user}= useUser()
 
-  const onCreate = () => {
+  const onCreate = async () => {
     const uuid = uuidv4();
-    console.log(resumeTitle, uuid);
-    setResumeTitle("");
+    const data = {
+      data: {
+        title: resumeTitle,
+        resumeId: uuid,
+        userEmail:user?primaryEmailAddress?.emailAddress,
+        userName:user?.fullName
+      },
+    };
+    GlobalApi.CreateNewResume();
   };
   return (
     <div>
