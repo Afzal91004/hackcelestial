@@ -8,6 +8,7 @@ import store from "./redux/store.js";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { ClerkProvider } from "@clerk/clerk-react";
+import Footer from "./components/Footer.jsx";
 
 // Import your publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -23,6 +24,7 @@ createRoot(document.getElementById("root")).render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <App />
+          <Footer/>
         </PersistGate>
       </Provider>
       <Toaster />

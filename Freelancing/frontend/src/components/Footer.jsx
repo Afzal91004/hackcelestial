@@ -3,18 +3,18 @@ import KromaApps from "../../public/KromaApps.png";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-t-gray-200 py-8">
+    <div className="inset-x-0 bottom-0  flex-col md:flex-row md:justify-between p-4  shadow-lg w-full  border-t border-t-gray-200 bg-black py-8 flex bg ">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <h2 className="text-xl font-bold">TalentTribe</h2>
-            <p className="text-sm">© 2024 KromaApps. All rights reserved.</p>
+            <h2 className="text-xl font-bold text-white">TalentTribe</h2>
+            <p className="text-sm co text-white">© 2024 KromaApps. All rights reserved.</p>
           </div>
           <div>
             <img src={KromaApps} alt="KromaApps" width={200} />
           </div>
 
-          <div className="flex space-between gap-2 mt-4 md:mt-0">
+          <div className="flex space-between gap-3 mt-4 md:mt-0 p-10 text-white">
             <a
               href="https://facebook.com"
               className="hover:text-gray-400"
@@ -45,7 +45,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 

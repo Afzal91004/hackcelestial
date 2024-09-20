@@ -99,7 +99,7 @@ const Navbar = () => {
               {!user ? (
                 <div className="flex items-center gap-2">
                   <Link to="/login">
-                    <Button variant="outline">Login</Button>
+                    <Button variant="outline" className="text-black hover:bg-gray-300">Login</Button>
                   </Link>
                   <Link to="/signup">
                     <Button className="bg-[#6A38C2] hover:bg-[#35156c]">
