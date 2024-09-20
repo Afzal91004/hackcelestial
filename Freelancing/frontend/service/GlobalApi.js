@@ -1,26 +1,31 @@
-import axios from "axios"; // Use import instead of require
+import axios from "axios";
 
-const API_KEY = import.meta.env.VITE_STRAPI_API_KEY; // Access environment variable
-
+const API_KEY = import.meta.env.VITE_STRAPI_API_KEY;
 const axiosClient = axios.create({
-  baseURL: "http://localhost:1337/api/", // Adjust the base URL as needed
+  baseURL: import.meta.env.VITE_API_BASE_URL + "/api/",
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${API_KEY}`, // Add Authorization header with API key
+    Authorization: `Bearer ${API_KEY}`,
   },
 });
 
-// Function to create a new resume
-const CreateNewResume = (data) => axiosClient.post("/user-resumes/", data);
+const CreateNewResume = (data) => axiosClient.post("/user-resumes", data);
 
 const GetUserResumes = (userEmail) =>
   axiosClient.get("/user-resumes?filters[userEmail][$eq]=" + userEmail);
 
+const UpdateResumeDetail = (id, data) =>
+  axiosClient.put("/user-resumes/" + id, data);
+
 const GetResumeById = (id) =>
   axiosClient.get("/user-resumes/" + id + "?populate=*");
-// Export the function for use in other parts of your application
+
+const DeleteResumeById = (id) => axiosClient.delete("/user-resumes/" + id);
+
 export default {
   CreateNewResume,
   GetUserResumes,
+  UpdateResumeDetail,
   GetResumeById,
+  DeleteResumeById,
 };

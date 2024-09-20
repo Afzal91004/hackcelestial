@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { setUser } from "@/redux/authSlice";
+import logo from "../../../../public/logo.png";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
@@ -39,25 +40,23 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-white px-24">
+    <div className="bg-black text-pink-50 px-10">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         {location.pathname === ("/resumate" || "/resume/dashboard") ? (
           <>
             {/* <div className="flex justify-between  items-center"> */}
             <div>
-              <h1 className="text-2xl font-bold">
-                Job<span className="text-[#F83002]">Portal</span>
-              </h1>
+              <img src={logo} alt="TalentTribe" width={200} />
             </div>
             <div className="flex">
               <h1 className="text-2xl font-bold">Resumate</h1>
             </div>
             <div className="flex items-center gap-12">
-              <ul className="flex font-medium items-center gap-5">
-                <li>
+              <ul className="flex font-medium items-center gap-8">
+                <li className="hover:font-extrabold text-sm mx-2">
                   <Link to="/">Home</Link>
                 </li>
-                <li>
+                <li className="hover:font-extrabold text-sm mx-2">
                   <Link to="/resumate/Dashboard">Resumate Dashboard</Link>
                 </li>
               </ul>
@@ -67,36 +66,34 @@ const Navbar = () => {
         ) : (
           <>
             <div>
-              <h1 className="text-2xl font-bold">
-                Job<span className="text-[#F83002]">Portal</span>
-              </h1>
+              <img src={logo} alt="TalentTribe" width={200} />
             </div>
             <div className="flex items-center gap-12">
               <ul className="flex font-medium items-center gap-5">
                 {user && user.role === "recruiter" ? (
-                  <>
-                    <li>
+                  <div className="flex gap-8">
+                    <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/admin/companies">Companies</Link>
                     </li>
-                    <li>
+                    <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/admin/jobs">Jobs</Link>
                     </li>
-                  </>
+                  </div>
                 ) : (
-                  <>
-                    <li>
+                  <div className="flex gap-8">
+                    <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/">Home</Link>
                     </li>
-                    <li>
+                    <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/resumate">Resumate</Link>
                     </li>
-                    <li>
+                    <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/jobs">Jobs</Link>
                     </li>
-                    <li>
+                    <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/browse">Browse</Link>
                     </li>
-                  </>
+                  </div>
                 )}
               </ul>
               {!user ? (
