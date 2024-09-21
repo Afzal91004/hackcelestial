@@ -19,7 +19,7 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current route
+  const location = useLocation();
 
   const logoutHandler = async () => {
     try {
@@ -57,7 +57,7 @@ const Navbar = () => {
                   <Link to="/">Home</Link>
                 </li>
                 <li className="hover:font-extrabold text-sm mx-2">
-                  <Link to="/resumate/Dashboard">Resumate Dashboard</Link>
+                  <Link to="/resumate/Dashboard">Resumate</Link>
                 </li>
               </ul>
             </div>
@@ -85,7 +85,10 @@ const Navbar = () => {
                       <Link to="/">Home</Link>
                     </li>
                     <li className="hover:font-extrabold text-sm mx-2">
-                      <Link to="/resumate">Resumate</Link>
+                      <Link to="/mockmate">Mockmate</Link>
+                    </li>
+                    <li className="hover:font-extrabold text-sm mx-2">
+                      <Link to="/resumate/Dashboard">Resumate</Link>
                     </li>
                     <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/jobs">Jobs</Link>

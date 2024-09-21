@@ -18,6 +18,7 @@ import Dashboard from "./resumate/Dashboard";
 import SignInPage from "./resumate/authentication/sign-in";
 import ResApp from "./resumate/ResApp";
 import EditResume from "./resumate/resume/[resumeId]/edit";
+import Mockmate from "./components/Mockmate";
 
 const appRouter = createBrowserRouter([
   {
@@ -103,10 +104,6 @@ const appRouter = createBrowserRouter([
     element: <ResApp />,
     children: [
       {
-        path: "/resumate",
-        element: <Resumate />,
-      },
-      {
         path: "/resumate/dashboard",
         element: <Dashboard />,
       },
@@ -120,6 +117,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/resumate/authentication/sign-in",
     element: <SignInPage />,
+  },
+  {
+    path: "/mockmate",
+    element: <Mockmate />,
   },
 ]);
 
