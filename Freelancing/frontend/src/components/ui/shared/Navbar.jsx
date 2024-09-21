@@ -48,16 +48,15 @@ const Navbar = () => {
             <div>
               <img src={logo} alt="TalentTribe" width={200} />
             </div>
-            <div className="flex">
-              <h1 className="text-2xl font-bold">Resumate</h1>
-            </div>
+
             <div className="flex items-center gap-12">
               <ul className="flex font-medium items-center gap-8">
                 <li className="hover:font-extrabold text-sm mx-2">
                   <Link to="/">Home</Link>
                 </li>
-                <li className="hover:font-extrabold text-sm mx-2">
-                  <Link to="/resumate/Dashboard">Resumate</Link>
+
+                <li>
+                  <Link to="/ichat">iChat</Link>
                 </li>
               </ul>
             </div>
@@ -87,8 +86,14 @@ const Navbar = () => {
                     <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/mockmate">Mockmate</Link>
                     </li>
-                    <li className="hover:font-extrabold text-sm mx-2">
-                      <Link to="/resumate/Dashboard">Resumate</Link>
+
+                    <li>
+                      <Link to="/ichat">iChat</Link>
+                    </li>
+                    <li>
+                      <a href="https://66ee5618f20b6de7b580980b--cosmic-zabaione-138a44.netlify.app/">
+                        build resume.
+                      </a>
                     </li>
                     <li className="hover:font-extrabold text-sm mx-2">
                       <Link to="/jobs">Jobs</Link>
@@ -102,7 +107,12 @@ const Navbar = () => {
               {!user ? (
                 <div className="flex items-center gap-2">
                   <Link to="/login">
-                    <Button variant="outline" className="text-black hover:bg-gray-300">Login</Button>
+                    <Button
+                      variant="outline"
+                      className="text-black hover:bg-gray-300"
+                    >
+                      Login
+                    </Button>
                   </Link>
                   <Link to="/signup">
                     <Button className="bg-[#6A38C2] hover:bg-[#35156c]">

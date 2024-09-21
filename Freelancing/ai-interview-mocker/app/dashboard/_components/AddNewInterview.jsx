@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { chatSession } from "@/utils/GeminiAIModal";
 import { LoaderCircle } from "lucide-react";
 import { MockInterview } from "@/utils/schema";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { db } from "@/utils/db";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
@@ -42,21 +42,31 @@ function AddNewInterview() {
     try {
       const result = await chatSession.sendMessage(inputPrompt);
       const responseText = await result.response.text();
-      console.log("🚀 ~ file: AddNewInterview.jsx:41 ~ onSubmit ~ responseText:", responseText)
+      console.log(
+        "🚀 ~ file: AddNewInterview.jsx:41 ~ onSubmit ~ responseText:",
+        responseText
+      );
       const jsonMatch = responseText.match(/\[.*?\]/s);
       if (!jsonMatch) {
         throw new Error("No valid JSON array found in the response");
       }
-  
+
       const jsonResponsePart = jsonMatch[0];
-      console.log("🚀 ~ file: AddNewInterview.jsx:43 ~ onSubmit ~ jsonResponsePart:", jsonResponsePart);
-  
+      console.log(
+        "🚀 ~ file: AddNewInterview.jsx:43 ~ onSubmit ~ jsonResponsePart:",
+        jsonResponsePart
+      );
+
       if (jsonResponsePart) {
         const mockResponse = JSON.parse(jsonResponsePart.trim());
-        console.log("🚀 ~ file: AddNewInterview.jsx:45 ~ onSubmit ~ mockResponse:", mockResponse)
+        console.log(
+          "🚀 ~ file: AddNewInterview.jsx:45 ~ onSubmit ~ mockResponse:",
+          mockResponse
+        );
         setJsonResponse(mockResponse);
         const jsonString = JSON.stringify(mockResponse);
-        const res = await db.insert(MockInterview)
+        const res = await db
+          .insert(MockInterview)
           .values({
             mockId: uuidv4(),
             jsonMockResp: jsonString,
@@ -64,10 +74,11 @@ function AddNewInterview() {
             jobDesc: jobDescription,
             jobExperience: jobExperience,
             createdBy: user?.primaryEmailAddress?.emailAddress,
-            createdAt: moment().format('DD-MM-YYYY'),
-          }).returning({ mockId: MockInterview.mockId });
-          setLoading(false);
-          router.push(`dashboard/interview/${res[0]?.mockId}`);
+            createdAt: moment().format("DD-MM-YYYY"),
+          })
+          .returning({ mockId: MockInterview.mockId });
+        setLoading(false);
+        router.push(`dashboard/interview/${res[0]?.mockId}`);
       } else {
         console.error("Error: Unable to extract JSON response");
       }
@@ -121,7 +132,7 @@ function AddNewInterview() {
                   <Input
                     placeholder="Ex. 5"
                     type="number"
-                    min="1"
+                    min="0"
                     max="70"
                     required
                     onChange={(e) => setJobExperience(e.target.value)}
@@ -129,16 +140,21 @@ function AddNewInterview() {
                 </div>
               </div>
               <div className="flex gap-5 justify-end">
-                <Button type="button" variant="ghost" onClick={() => setOpenDialog(false)}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setOpenDialog(false)}
+                >
                   Cancel
                 </Button>
                 <Button type="submit" disabled={loading}>
                   {loading ? (
                     <>
-                      <LoaderCircle className="animate-spin" /> Generating from AI
+                      <LoaderCircle className="animate-spin" /> Generating from
+                      AI
                     </>
                   ) : (
-                    'Start Interview'
+                    "Start Interview"
                   )}
                 </Button>
               </div>

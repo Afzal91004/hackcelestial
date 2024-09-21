@@ -13,11 +13,7 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applicants from "./components/admin/Applicants";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
-import Resumate from "./resumate/Resumate";
-import Dashboard from "./resumate/Dashboard";
-import SignInPage from "./resumate/authentication/sign-in";
-import ResApp from "./resumate/ResApp";
-import EditResume from "./resumate/resume/[resumeId]/edit";
+import Ichat from "./components/Ichat";
 import Mockmate from "./components/Mockmate";
 
 const appRouter = createBrowserRouter([
@@ -99,24 +95,9 @@ const appRouter = createBrowserRouter([
     ),
   },
 
-  // resumate
   {
-    element: <ResApp />,
-    children: [
-      {
-        path: "/resumate/dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "/resumate/dashboard/resume/:resumeId/edit",
-        element: <EditResume />,
-      },
-    ],
-  },
-
-  {
-    path: "/resumate/authentication/sign-in",
-    element: <SignInPage />,
+    path: "/ichat",
+    element: <Ichat />,
   },
   {
     path: "/mockmate",
